@@ -4,6 +4,7 @@ defmodule Artem.Fixtures.TestSchema do
 
   query do
     field(:version, :string)
+
     field(:name_from_context,
       type: :string,
       resolve: fn _, _, res ->

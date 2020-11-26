@@ -7,7 +7,6 @@ defmodule Artem do
   alias Absinthe.Phase
   alias Absinthe.Pipeline
 
-
   defmacro __using__(opts) do
     schema = Keyword.get(opts, :schema)
     pipeline = Keyword.get(opts, :pipeline, {__MODULE__, :default_pipeline})
@@ -69,7 +68,10 @@ defmodule Artem do
         name = document.name |> Macro.underscore() |> String.to_atom()
 
         def unquote(Macro.escape(name))(opts) do
-          Artem.run(unquote(Macro.escape(document)), Keyword.merge(opts, operation_name: unquote(Macro.escape(document)).name))
+          Artem.run(
+            unquote(Macro.escape(document)),
+            Keyword.merge(opts, operation_name: unquote(Macro.escape(document)).name)
+          )
         end
       end
 
