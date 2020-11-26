@@ -43,6 +43,7 @@ defmodule ExGql.MixProject do
     [
       {:absinthe, "~> 1.5"},
       {:ex_doc, "~> 0.22", only: [:dev, :test]},
+      {:credo, "~> 1.4", only: [:dev, :test], runtime: false},
       {:benchee, "~> 1.0", only: [:dev, :test]}
     ]
   end
