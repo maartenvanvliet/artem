@@ -229,9 +229,6 @@ defmodule Artem do
   @doc """
   Run a document against the schema.
 
-  The
-
-
   ## Examples
       defmodule SomeTest do
         use Artem, schema: Your.Schema
@@ -242,14 +239,15 @@ defmodule Artem do
           }
         |
 
-        test "runs precompiled query" do
+        test "with assigned variables and context" do
           @query
-          |> Artem.assign_variables(%{format: "YYMMDD})
+          |> Artem.assign_variables(%{"format" => "YYMMDD"})
+          |> Artem.assign_context(%{current_user_id: 1})
           |> Artem.run()
         end
 
-        test "with " do
-          Artem.run(@query, variables: %{format: "YYMMDD}, context: %{current_user_id: 1})
+        test "with passed in variables and context" do
+          Artem.run(@query, variables: %{"format" => "YYMMDD}, context: %{current_user_id: 1})
         end
       end
 
