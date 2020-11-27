@@ -297,10 +297,10 @@ defmodule Artem do
     end
   end
 
-  defp build_name(%{input: %{definitions: nodes}}) do
-    node = List.first(nodes)
-    node.name
-  end
+  defp build_name(%{input: %{definitions: [node]}}), do: node.name
+
+  defp build_name(%{input: %{definitions: _nodes}}),
+    do: raise(Artem.Error, "Multiple operations are not supported")
 
   # For raw string documents, entire pipeline needs to run
   defp build_pipeline(%Artem.Document{document: document} = doc, options)

@@ -71,6 +71,27 @@ defmodule ArtemTest do
     refute function_exported?(__MODULE__, :test_c, 1)
   end
 
+  test "raises on multiple operations" do
+    document = """
+    defmodule Test do
+      use Artem, schema: Artem.Fixtures.TestSchema
+
+      ~q|
+        query Test{
+          version
+        }
+        query Test2{
+          version
+        }
+      |
+    end
+    """
+
+    assert_raise(Artem.Error, "Multiple operations are not supported", fn ->
+      Code.eval_string(document)
+    end)
+  end
+
   test "invalid doc" do
     document = """
     defmodule Test do
