@@ -37,6 +37,9 @@ defmodule ArtemTest do
   test "generated function works with context" do
     assert test_a(context: %{name: "some name"}) ==
              {:ok, %{data: %{"name_from_context" => "some name"}}}
+
+    assert test_a(%{}, %{name: "some name"}) ==
+             {:ok, %{data: %{"name_from_context" => "some name"}}}
   end
 
   ~q|
@@ -49,6 +52,9 @@ defmodule ArtemTest do
     assert function_exported?(__MODULE__, :test_b, 1)
 
     assert test_b(variables: %{"name" => "some name"}) ==
+             {:ok, %{data: %{"nameFromVar" => "some name"}}}
+
+    assert test_b(%{"name" => "some name"}, %{}) ==
              {:ok, %{data: %{"nameFromVar" => "some name"}}}
   end
 

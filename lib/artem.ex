@@ -67,11 +67,14 @@ defmodule Artem do
       if options[:generate_function] && document.name != nil do
         name = document.name |> Macro.underscore() |> String.to_atom()
 
-        def unquote(Macro.escape(name))(opts) do
+        def unquote(Macro.escape(name))(opts) when is_list(opts) do
           Artem.run(
             unquote(Macro.escape(document)),
             Keyword.merge(opts, operation_name: unquote(Macro.escape(document)).name)
           )
+        end
+        def unquote(Macro.escape(name))(variables \\ %{}, context \\ %{}, opts \\ []) do
+          unquote(Macro.escape(name))(Keyword.merge([variables: variables, context: context], opts))
         end
       end
 
