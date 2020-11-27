@@ -73,8 +73,11 @@ defmodule Artem do
             Keyword.merge(opts, operation_name: unquote(Macro.escape(document)).name)
           )
         end
+
         def unquote(Macro.escape(name))(variables \\ %{}, context \\ %{}, opts \\ []) do
-          unquote(Macro.escape(name))(Keyword.merge([variables: variables, context: context], opts))
+          unquote(Macro.escape(name))(
+            Keyword.merge([variables: variables, context: context], opts)
+          )
         end
       end
 
