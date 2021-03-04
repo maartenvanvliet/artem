@@ -15,12 +15,12 @@ jobs:
             check_style: true
     steps:
       - uses: actions/checkout@v2.3.4
-      - uses: actions/setup-elixir@v1.5
+      - uses: erlef/setup-elixir@v1.6.0
         with:
           otp-version: ${{matrix.otp}}
           elixir-version: ${{matrix.elixir}}
       - name: Install Dependencies
-        run: mix deps.get
+        run: mix deps.get && mix deps.unlock --check-unused
       - name: Check formatting
         if: matrix.check_formatted
         run: mix format --check-formatted
